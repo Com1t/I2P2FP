@@ -813,7 +813,7 @@
 1642394443 source:c:\users\fuchi\desktop\i2pfinalproject\main.cpp
 	"GameWindow.h"
 
-1642432710 c:\users\fuchi\desktop\i2pfinalproject\gamewindow.h
+1642445870 c:\users\fuchi\desktop\i2pfinalproject\gamewindow.h
 	<allegro5/allegro_audio.h>
 	<allegro5/allegro_acodec.h>
 	<vector>
@@ -930,16 +930,20 @@
 1642394443 source:c:\users\fuchi\desktop\i2pfinalproject\tower.cpp
 	"Tower.h"
 
-1642433689 source:c:\users\fuchi\desktop\i2pfinalproject\gamewindow.cpp
+1642445824 source:c:\users\fuchi\desktop\i2pfinalproject\gamewindow.cpp
 	"GameWindow.h"
 	"Bear.h"
 	"Block.h"
 	"Entry.h"
 	"Road.h"
 	"treasure.h"
+	"fake_treasure.h"
 	"trap_0.h"
 	"trap_1.h"
 	"trap_2.h"
+	"Weapon.h"
+	"Transport.h"
+	"NPC_moster.h"
 	"global.h"
 	<iostream>
 
@@ -959,9 +963,9 @@
 1642394443 source:c:\users\fuchi\desktop\i2pfinalproject\algif5\src\lzw.c
 	"algif.h"
 
-1642432655 c:\users\fuchi\desktop\i2pfinalproject\bear.h
+1642444804 c:\users\fuchi\desktop\i2pfinalproject\bear.h
 
-1642434319 c:\users\fuchi\desktop\i2pfinalproject\block.h
+1642445557 c:\users\fuchi\desktop\i2pfinalproject\block.h
 	<stdio.h>
 	<string.h>
 	<allegro5/allegro.h>
@@ -970,21 +974,34 @@
 	"global.h"
 	"Bear.h"
 
-1642432749 c:\users\fuchi\desktop\i2pfinalproject\treasure.h
+1642438653 c:\users\fuchi\desktop\i2pfinalproject\treasure.h
 	"Block.h"
 
-1642432893 c:\users\fuchi\desktop\i2pfinalproject\entry.h
+1642440020 c:\users\fuchi\desktop\i2pfinalproject\entry.h
 	"Block.h"
 
 1642432770 c:\users\fuchi\desktop\i2pfinalproject\road.h
 	"Block.h"
 
-1642433735 c:\users\fuchi\desktop\i2pfinalproject\trap_0.h
+1642439688 c:\users\fuchi\desktop\i2pfinalproject\trap_0.h
 	"Block.h"
 
-1642433738 c:\users\fuchi\desktop\i2pfinalproject\trap_1.h
+1642439705 c:\users\fuchi\desktop\i2pfinalproject\trap_1.h
 	"Block.h"
 
-1642433754 c:\users\fuchi\desktop\i2pfinalproject\trap_2.h
+1642439710 c:\users\fuchi\desktop\i2pfinalproject\trap_2.h
+	"Block.h"
+
+1642440075 c:\users\fuchi\desktop\i2pfinalproject\fake_treasure.h
+	"Block.h"
+
+1642445961 c:\users\fuchi\desktop\i2pfinalproject\weapon.h
+	<iostream>
+	"Block.h"
+
+1642445982 c:\users\fuchi\desktop\i2pfinalproject\transport.h
+	"Block.h"
+
+1642445999 c:\users\fuchi\desktop\i2pfinalproject\npc_moster.h
 	"Block.h"
 

@@ -89,6 +89,7 @@ private:
     Block *road[Num_Road_Row][Num_Road_Col];
 	// player
 	Bear* player;
+	int found_treasure_amt = 0;
 
     ALLEGRO_DISPLAY* display = NULL;
     ALLEGRO_FONT *font = NULL;
@@ -106,6 +107,7 @@ private:
     ALLEGRO_SAMPLE_INSTANCE *failSound = NULL;
     ALLEGRO_SAMPLE_INSTANCE *backgroundSound = NULL;
 
+	int boss_level = 1;
     LEVEL *level = NULL;
     Menu *menu = NULL;
 

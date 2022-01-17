@@ -65,6 +65,19 @@
 		<Unit filename="Tower.h" />
 		<Unit filename="Wolf.h" />
 		<Unit filename="WolfKnight.h" />
+		<Unit filename="algif5/src/algif.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="algif5/src/algif.h" />
+		<Unit filename="algif5/src/bitmap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="algif5/src/gif.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="algif5/src/lzw.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="global.cpp" />
 		<Unit filename="global.h" />
 		<Extensions>

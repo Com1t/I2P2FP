@@ -4,9 +4,13 @@
 #include "Entry.h"
 #include "Road.h"
 #include "treasure.h"
+#include "fake_treasure.h"
 #include "trap_0.h"
 #include "trap_1.h"
 #include "trap_2.h"
+#include "Weapon.h"
+#include "Transport.h"
+#include "NPC_moster.h"
 #include "global.h"
 #include <iostream>
 
@@ -44,39 +48,83 @@ GameWindow::game_init()
     icon = al_load_bitmap("./icon.png");
     background = al_load_bitmap("./background/default0.jpg");
 	
-	int deploy_amt = 5;
-    road[1][0] = new Entry(1, 0);
     for(int i = 0;i < Num_Road_Row;i++){
-		int deploy_col = rand() % (Num_Road_Col - 2) + 1;
 		for(int j = 0;j < Num_Road_Col;j++)
         {
-            if(j == 0 || j == Num_Road_Col - 1)
-            {
-                
-                road[i][j] = new Entry(i, j);
-            }
-			else if(j == deploy_col && deploy_amt == 0){
-				road[i][j] = new Treasure(i, j);
-				deploy_amt--;
-			}
-			else if(j == deploy_col && deploy_amt == 1){
-				road[i][j] = new Trap_0(i, j);
-				deploy_amt--;
-			}
-			else if(j == deploy_col && deploy_amt == 2){
-				road[i][j] = new Trap_1(i, j);
-				deploy_amt--;
-			}
-			else if(j == deploy_col && deploy_amt >= 3){
-				road[i][j] = new Trap_2(i, j);
-				deploy_amt--;
-			}
-            else
-            {
-                road[i][j] = new Road(i, j);
-            }
+        	road[i][j] = nullptr;
         }
     }
+	
+	if(!boss_level){
+		int deploy_amt = 5;
+	    for(int i = 0;i < Num_Road_Row;i++){
+			int deploy_col = rand() % (Num_Road_Col - 2) + 1;
+			for(int j = 0;j < Num_Road_Col;j++)
+	        {
+	            if(j == 0 || j == Num_Road_Col - 1)
+	            {
+	                road[i][j] = new Entry(i, j);
+	            }
+				else if(j == deploy_col && deploy_amt == 0){
+					road[i][j] = new Treasure(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col && deploy_amt == 1){
+					road[i][j] = new Trap_0(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col && deploy_amt == 2){
+					road[i][j] = new Trap_1(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col && deploy_amt == 3){
+					road[i][j] = new Trap_2(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col && deploy_amt >= 4){
+					road[i][j] = new FakeTreasure(i, j);
+					deploy_amt--;
+				}
+	            else
+	            {
+	                road[i][j] = new Road(i, j);
+	            }
+	        }
+	    }
+	}
+	else{
+		int deploy_amt = 8;
+	    for(int i = 0;i < Num_Road_Row;i++){
+			int deploy_col = rand() % (Num_Road_Col - 2) + 1;
+			for(int j = 0;j < Num_Road_Col;j++)
+	        {
+	            if(j == 0 || j == Num_Road_Col - 1)
+	            {
+	                road[i][j] = new Entry(i, j);
+	            }
+				else if(j == deploy_col && deploy_amt == 0){
+					road[i][j] = new Treasure(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col && deploy_amt == 1){
+					road[i][j] = new Trap_0(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col && deploy_amt == 2){
+					road[i][j] = new Trap_1(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col && deploy_amt >= 3){
+					road[i][j] = new Trap_2(i, j);
+					deploy_amt--;
+				}
+	            else
+	            {
+	                road[i][j] = new Road(i, j);
+	            }
+	        }
+	    }
+	}
 
     for(int i = 0; i < Num_TowerType; i++)
     {
@@ -369,6 +417,114 @@ GameWindow::game_update()
 void
 GameWindow::game_reset()
 {
+    printf("Game_init be called...\n");
+    char buffer[50];
+	al_stop_timer(timer);
+	
+	// initialize character
+	delete player;
+	player = new Bear(8, 5);
+
+    for(int i = 0;i < Num_Road_Row;i++)
+        for(int j = 0;j < Num_Road_Col;j++)
+            delete road[i][j];
+
+	if(!boss_level){
+		int deploy_amt = 5;
+	    for(int i = 0;i < Num_Road_Row;i++){
+			int deploy_col = rand() % (Num_Road_Col - 2) + 1;
+			for(int j = 0;j < Num_Road_Col;j++)
+	        {
+	            if(j == 0 || j == Num_Road_Col - 1)
+	            {
+	                road[i][j] = new Entry(i, j);
+	            }
+				else if(j == deploy_col && deploy_amt == 0){
+					road[i][j] = new Treasure(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col && deploy_amt == 1){
+					road[i][j] = new Trap_0(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col && deploy_amt == 2){
+					road[i][j] = new Trap_1(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col && deploy_amt == 3){
+					road[i][j] = new Trap_2(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col && deploy_amt >= 4){
+					road[i][j] = new FakeTreasure(i, j);
+					deploy_amt--;
+				}
+	            else
+	            {
+	                road[i][j] = new Road(i, j);
+	            }
+	        }
+	    }
+	}
+	else{
+		int deploy_amt = 8;
+	    for(int i = 0;i < Num_Road_Row;i++){
+			int deploy_col_1 = rand() % (Num_Road_Col - 2) + 1;
+			int deploy_col_2 = rand() % (Num_Road_Col - 2) + 1;
+					while(deploy_col_1 == deploy_col_2)
+						deploy_col_2 = rand() % (Num_Road_Col - 2) + 1;
+			
+			for(int j = 0;j < Num_Road_Col;j++)
+	        {
+	            if(j == 0 || j == Num_Road_Col - 1)
+	            {
+	                road[i][j] = new Entry(i, j);
+	            }
+				else if(j == deploy_col_1 && deploy_amt == 0){
+					road[i][j] = new Treasure(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col_2 && deploy_amt == 1){
+					road[i][j] = new Treasure(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col_1 && deploy_amt == 2){
+					road[i][j] = new Treasure(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col_2 && deploy_amt == 3){
+					road[i][j] = new Trap_2(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col_1 && deploy_amt == 4){
+					road[i][j] = new NPCmonster(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col_2 && deploy_amt == 5){
+					road[i][j] = new Weapon(i, j);
+					deploy_amt--;
+				}
+				else if(j == deploy_col_1 && deploy_amt >= 6){
+					int trans_in_x = j;
+					int trans_in_y = i;
+
+					int trans_out_x = rand() % (Num_Road_Col - 2) + 1;
+					while(trans_in_x == trans_out_x)
+						trans_out_x = rand() % (Num_Road_Col - 2) + 1;
+					int trans_out_y = rand() % (Num_Road_Row);
+					road[i][j] = new Transport(i, j, trans_out_x, trans_out_y, 0);
+					road[trans_in_y][trans_in_x] = new Transport(trans_in_x, trans_in_y, i, j, 0);
+					deploy_amt--;
+				}
+	            else
+	            {
+	                road[i][j] = new Road(i, j);
+	            }
+	        }
+	    }
+	}
+
+/*
     // reset game and begin
     for(auto&& child : towerSet) {
         delete child;
@@ -391,7 +547,7 @@ GameWindow::game_reset()
 
     // stop timer
     al_stop_timer(timer);
-    al_stop_timer(monster_pro);
+    al_stop_timer(monster_pro);*/al_start_timer(timer);
 }
 
 void
@@ -474,12 +630,10 @@ GameWindow::process_event()
 				player->Move(LEFT);
                 break;
             case ALLEGRO_KEY_RIGHT:
-                /*TODO: handle pause event here*/
 				printf("ALLEGRO_KEY_RIGHT");
 				player->Move(RIGHT);
                 break;
             case ALLEGRO_KEY_UP:
-                /*TODO: handle pause event here*/
 				printf("ALLEGRO_KEY_UP");
 				player->Move(UP);
                 break;
@@ -491,7 +645,40 @@ GameWindow::process_event()
 		for(int i = 0; i < Num_Road_Row; i++){
 			for(int j = 0; j < Num_Road_Col; j++){
 				if(road[i][j]->touched(player->getPos_y(), player->getPos_x())){
-					road[i][j]->touch_response(player);
+					int ret = road[i][j]->touch_response(player);
+					if(ret == 0){
+						if(strcmp(road[i][j]->getName(), "Treasure") == 0){
+							// dynamic cast for parent point to child method
+							Treasure *treasure = dynamic_cast<Treasure*>(road[i][j]);
+							if(treasure->getFound() == 0){
+								found_treasure_amt ++;
+								treasure->setFound(1);
+								// find one entry as exit point
+								int x = (rand() % 2)? Num_Road_Col - 1: 0;
+								int y = rand() % Num_Road_Row;
+								Entry *temp = dynamic_cast<Entry*>(road[y][x]);
+								temp->setExit();
+							}
+						}
+						else if(strcmp(road[i][j]->getName(), "Transport") == 0){
+							// dynamic cast for parent point to child method
+							Transport *transport = dynamic_cast<Transport*>(road[i][j]);
+							if(transport->getInOut() == 0){
+								road[transport->get_dest_x()][transport->get_dest_y()]->touch_response(player);
+							}
+						}
+					}
+					else if(ret == 1){
+						// Game over
+						game_reset();
+					}
+					else{
+						// Go to next level
+						if(boss_level && found_treasure_amt == 3)
+							game_reset();
+						else if(boss_level++ == 0)
+							game_reset();
+					}
 				}
 			}
 		}

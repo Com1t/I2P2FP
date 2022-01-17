@@ -1,15 +1,15 @@
-#ifndef WEAPON_H_INCLUDED
-#define WEAPON_H_INCLUDED
-#include <iostream>
+#ifndef NPC_MONSTER_H_INCLUDED
+#define NPC_MONSTER_H_INCLUDED
+
 #include "Block.h"
 
-class Weapon : public Block
+class NPCmonster : public Block
 {
 public:
-    Weapon(int x, int y) : Block()
+    NPCmonster(int x, int y) : Block()
     {
 		background = al_load_bitmap("./background/bgTreasure.jpg");
-		weapon_it_self = al_load_bitmap("./background/weapon.png");
+		weapon_it_self = al_load_bitmap("./role/NPC.png");
 		
 		response = false;
 		
@@ -19,7 +19,7 @@ public:
 		
 	    worth = 100;
 		
-		strncpy(class_name, "Weapon", 20);
+		strncpy(class_name, "NPCmonster", 20);
 		
 	    // position
 	    pos_x = x;
@@ -28,16 +28,18 @@ public:
 		Draw();
     }
 	
-	~Weapon(){
+	~NPCmonster(){
 		al_destroy_bitmap(background);
 	};
 
 	int touch_response(Bear* player) { 
-		player->set_status(HAPPY);
-		if(acquired == 0){
-			acquired = 1;
-			std::cout << "weapon++\n";
-			player->weapon_inc();
+		player->set_status(SHAKE);
+		if(player->getWeaponAmt() > 0){
+			// NOTE: trigger pokemon
+			// remember to set the response here
+		}
+		else{
+			response = 1;
 		}
 		discover();
 		return response; 
@@ -56,5 +58,6 @@ private:
 	ALLEGRO_BITMAP* weapon_it_self;
 	int acquired = 0;
 };
-#endif // WEAPON_H_INCLUDED
+#endif // NPC_MONSTER_H_INCLUDED
+
 

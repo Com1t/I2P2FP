@@ -12,7 +12,7 @@ public:
 		
 		response = true;
 		
-		damage = 10;
+		damage = 30;
 		
 	    worth = 100;
 		
@@ -33,7 +33,7 @@ public:
 		printf("TRAP2\n");
 		player->set_status(SHAKE);
 		discover();
-		return response; 
+		return player->Subtract_HP(damage);
 	}
 	
 

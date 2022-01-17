@@ -97,6 +97,8 @@ public:
 				break;
 		}
 	}
+    int setPos_x(int x) { cur_x = x; }
+    int setPos_y(int y) { cur_y = y; }
     int getPos_x() { return cur_x; }
     int getPos_y() { return cur_y; }
 	
@@ -104,11 +106,21 @@ public:
     int getWorth() { return worth; }
     int getScore() { return score; }
 
-    bool Subtract_HP(int);
+	void weapon_inc() { weapon_count += 3; }
+	int getWeaponAmt() { return weapon_count; }
+
+	
+	// return die
+    bool Subtract_HP(int amount){
+		HealthPoint -= amount;
+		if(HealthPoint <= 0)
+			return 1;
+		return 0;
+	};
 
 private:
     int direction_count[4];
-    int HealthPoint = 20;
+    int HealthPoint = 100;
     int speed = 1;
     int worth = 10;
     int score = 100;
@@ -124,6 +136,8 @@ private:
 	
 	int cur_x, cur_y;
     int max_x, max_y;
+
+	int weapon_count = 0;
 	
     int counter;
 	

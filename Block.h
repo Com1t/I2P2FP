@@ -24,8 +24,9 @@ public:
 	void discover() { covered = 0; }
 
     // functions that return informations of monster
-    // return true: Kill character
-    // return false: Not kill character
+    // return 2: go to next level
+    // return 1: Kill character
+    // return 0: Not kill character
     virtual int touch_response(Bear* player) { return response; }
 
 	bool touched(int x, int y) {
@@ -33,6 +34,10 @@ public:
 			return true;
 		return false;
 	};
+
+	char* getName(){
+		return class_name;
+	}
 	
     int getWorth() { return worth; }
 
@@ -43,7 +48,7 @@ public:
     };
 
 protected:
-	int covered = 1;
+	int covered = 0;
 	ALLEGRO_BITMAP* fog = al_load_bitmap("./background/fog.jpg");
 	ALLEGRO_BITMAP* background;
 	// animation pointer

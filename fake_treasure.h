@@ -1,5 +1,5 @@
-#ifndef TREASURE_H_INCLUDED
-#define TREASURE_H_INCLUDED
+#ifndef FAKE_TREASURE_H_INCLUDED
+#define FAKE_TREASURE_H_INCLUDED
 
 #include "Block.h"
 
@@ -30,9 +30,7 @@ public:
 
 	int touch_response(Bear* player) { 
 		discover();
-		if(exit)
-			printf("Game Reset\n");
-		return response; 
+		return 1; 
 	}
 	
 
@@ -43,4 +41,4 @@ public:
     		al_draw_scaled_bitmap(background, 0, 0, 1187, 671, 8+pos_y*130, 107+pos_x*74, 130, 74, 0);
     };
 };
-#endif // REDDRAGON_H_INCLUDED
+#endif // FAKE_TREASURE_H_INCLUDED

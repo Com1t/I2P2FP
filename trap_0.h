@@ -33,7 +33,7 @@ public:
 		printf("TRAP0\n");
 		player->set_status(SHAKE);
 		discover();
-		return response; 
+		return player->Subtract_HP(damage);
 	}
 	
 

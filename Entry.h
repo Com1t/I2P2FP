@@ -39,7 +39,7 @@ public:
 
 	int touch_response(Bear* player) { 
 		if(exit)
-			printf("Game Reset\n");
+			return 2;
 		return response; 
 	}
 	
