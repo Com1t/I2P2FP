@@ -19,6 +19,9 @@
 #include "Storm.h"
 #include "Attack.h"
 #include "Slider.h"
+// new added
+#include "algif5/src/algif.h"
+#include "Bear.h"
 
 #define GAME_INIT -1
 #define GAME_SETTING 0
@@ -79,7 +82,9 @@ private:
     ALLEGRO_BITMAP *background = NULL;
 
     //ALLEGRO_BITMAP *road = NULL;
-    ALLEGRO_BITMAP *road[Num_Road_Row][Num_Road_Col];
+    Block *road[Num_Road_Row][Num_Road_Col];
+	// player
+	Bear* player;
 
     ALLEGRO_DISPLAY* display = NULL;
     ALLEGRO_FONT *font = NULL;

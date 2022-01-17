@@ -1,4 +1,9 @@
 #include "GameWindow.h"
+#include "Bear.h"
+#include "Block.h"
+#include "Entry.h"
+#include "Road.h"
+#include "treasure.h"
 #include "global.h"
 #include <iostream>
 
@@ -30,23 +35,25 @@ GameWindow::game_init()
 {
     printf("Game_init be called...\n");
     char buffer[50];
-
+	
+	// initialize character
+	player = new Bear(8, 5);
     icon = al_load_bitmap("./icon.png");
     background = al_load_bitmap("./background/default0.jpg");
-
-    road[1][0] = al_load_bitmap("./background/bgEntry1_0.jpg");
+	
+	
+    road[1][0] = new Entry(1, 0);
     for(int i = 0;i < Num_Road_Row;i++)
         for(int j = 0;j < Num_Road_Col;j++)
         {
             if(j == 0 || j == Num_Road_Col - 1)
             {
-                sprintf(buffer, "./background/bgEntry%d_%d.jpg", i, j);
-                road[i][j] = al_load_bitmap(buffer);
+                
+                road[i][j] = new Entry(i, j);
             }
             else
             {
-                sprintf(buffer, "./background/bg00.jpg");
-                road[i][j] = al_load_bitmap(buffer);
+                road[i][j] = new Road(i, j);
             }
         }
 
@@ -383,7 +390,7 @@ GameWindow::game_destroy()
 
     for(int i = 0;i < Num_Road_Row;i++)
         for(int j = 0;j < Num_Road_Col;j++)
-            al_destroy_bitmap(road[i][j]);
+            delete road[i][j];
 
     for(int i=0;i<5; i++)
         al_destroy_bitmap(tower[i]);
@@ -416,10 +423,10 @@ GameWindow::process_event()
         if(event.timer.source == timer) {
             redraw = true;
 
-            if(Coin_Inc_Count == 0)
+            /*if(Coin_Inc_Count == 0)
                 menu->Change_Coin(Coin_Time_Gain);
 
-            Coin_Inc_Count = (Coin_Inc_Count + 1) % CoinSpeed;
+            Coin_Inc_Count = (Coin_Inc_Count + 1) % CoinSpeed;*/
 
             if(monsterSet.size() == 0 && !al_get_timer_started(monster_pro))
             {
@@ -428,28 +435,29 @@ GameWindow::process_event()
             }
 
         }
-        else {
+        /*else {
             if(Monster_Pro_Count == 0) {
-                Monster *m = create_monster();
+               Monster *m = create_monster();
 
-                if(m != NULL)
+                if(m != NULL);
                     monsterSet.push_back(m);
             }
             Monster_Pro_Count = (Monster_Pro_Count + 1) % level->getMonsterSpeed();
-        }
+        }*/
     }
     else if(event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
         return GAME_EXIT;
     }
     else if(event.type == ALLEGRO_EVENT_KEY_DOWN) {
+		printf("Keydown detected\n");
         switch(event.keyboard.keycode) {
-
             case ALLEGRO_KEY_P:
                 /*TODO: handle pause event here*/
+				printf("NONONO");
                 if(al_get_timer_started(timer)) al_stop_timer(timer), pause = 1;
                 else    al_start_timer(timer), pause = 0;
-                if(al_get_timer_started(monster_pro)) al_stop_timer(monster_pro);
-                else    al_start_timer(monster_pro);
+                /*if(al_get_timer_started(monster_pro)) al_stop_timer(monster_pro);
+                else    al_start_timer(monster_pro);*/
                 break;
             case ALLEGRO_KEY_M:
                 mute = !mute;
@@ -458,8 +466,26 @@ GameWindow::process_event()
                 else
                     al_play_sample_instance(backgroundSound);
                 break;
+            case ALLEGRO_KEY_LEFT:
+				printf("ALLEGRO_KEY_LEFT");
+				player->Move(LEFT);
+                break;
+            case ALLEGRO_KEY_RIGHT:
+                /*TODO: handle pause event here*/
+				printf("ALLEGRO_KEY_RIGHT");
+				player->Move(RIGHT);
+                break;
+            case ALLEGRO_KEY_UP:
+                /*TODO: handle pause event here*/
+				printf("ALLEGRO_KEY_UP");
+				player->Move(UP);
+                break;
+            case ALLEGRO_KEY_DOWN:
+				printf("ALLEGRO_KEY_DOWN");
+				player->Move(DOWN);
+                break;
         }
-    }
+    }/*
     else if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN && pause == 0) {
         if(event.mouse.button == 1) {
             if(selectedTower != -1 && mouse_hover(0, 0, field_width, field_height)) {
@@ -506,7 +532,7 @@ GameWindow::process_event()
 
         menu->MouseIn(mouse_x, mouse_y);
 
-    }
+    }*/
 
     if(redraw) {
         // update each object in game
@@ -528,13 +554,13 @@ GameWindow::draw_running_map()
 
     al_clear_to_color(al_map_rgba(100, 100, 100, 128));
     al_draw_bitmap(background, 0, 0, 0);
-
+	
     // render the background, entry point and the roads
     for(int i = 0;i < Num_Road_Row;i++)
         for(int j = 0;j < Num_Road_Col;j++)
-            al_draw_scaled_bitmap(road[i][j], 0, 0, 1187, 671, 8+j*130, 100+i*74, 130, 74, 0);
+            road[i][j]->Draw();
 
-
+		
     for(i = 0; i < field_height/40; i++)
     {
         for(j = 0; j < field_width/40; j++)
@@ -542,7 +568,7 @@ GameWindow::draw_running_map()
             char buffer[50];
             sprintf(buffer, "%d", i*15 + j);
             if(level->isRoad(i*15 + j)) {
-                al_draw_filled_rectangle(j*40, i*40, j*40+40, i*40+40, al_map_rgb(255, 244, 173));
+                // al_draw_filled_rectangle(j*40, i*40, j*40+40, i*40+40, al_map_rgb(255, 244, 173));
             }
             //al_draw_text(font, al_map_rgb(0, 0, 0), j*40, i*40, ALLEGRO_ALIGN_CENTER, buffer);
         }
@@ -551,7 +577,8 @@ GameWindow::draw_running_map()
     {
         monsterSet[i]->Draw();
     }
-
+	
+	player->Draw();
 
     for(std::list<Tower*>::iterator it = towerSet.begin(); it != towerSet.end(); it++)
         (*it)->Draw();
