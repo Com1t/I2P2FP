@@ -1,22 +1,22 @@
-#ifndef TRAP_0_H_INCLUDED
-#define TRAP_0_H_INCLUDED
+#ifndef WEAPON_H_INCLUDED
+#define WEAPON_H_INCLUDED
 
 #include "Block.h"
 
-class Trap_0 : public Block
+class Weapon : public Block
 {
 public:
-    Trap_0(int x, int y) : Block()
+    Weapon(int x, int y) : Block()
     {
-		background = al_load_bitmap("./background/bgTrap01.jpg");
+		background = al_load_bitmap("./background/bgTreasure.jpg");
 		
-		response = true;
+		response = false;
 		
-		damage = 10;
+		damage = 0;
 		
 	    worth = 100;
 		
-		strncpy(class_name, "Trap_0", 20);
+		strncpy(class_name, "Transport", 20);
 		
 	    // position
 	    pos_x = x;
@@ -25,18 +25,17 @@ public:
 		Draw();
     }
 	
-	~Trap_0(){
+	~Weapon(){
 		al_destroy_bitmap(background);
 	};
 
 	int touch_response(Bear* player) { 
-		printf("TRAP0\n");
-		player->set_status(SHAKE);
+		player->set_status(HAPPY);
 		discover();
 		return response; 
 	}
 	
-
+	
 	void Draw(){
     	if(covered)
     		al_draw_scaled_bitmap(fog, 0, 0, 1187, 671, 8+pos_y*130, 107+pos_x*74, 130, 74, 0);
@@ -44,5 +43,5 @@ public:
     		al_draw_scaled_bitmap(background, 0, 0, 1187, 671, 8+pos_y*130, 107+pos_x*74, 130, 74, 0);
     };
 };
-#endif // TRAP_0_H_INCLUDED
+#endif // WEAPON_H_INCLUDED
 

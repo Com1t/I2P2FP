@@ -813,7 +813,7 @@
 1642394443 source:c:\users\fuchi\desktop\i2pfinalproject\main.cpp
 	"GameWindow.h"
 
-1642419022 c:\users\fuchi\desktop\i2pfinalproject\gamewindow.h
+1642432710 c:\users\fuchi\desktop\i2pfinalproject\gamewindow.h
 	<allegro5/allegro_audio.h>
 	<allegro5/allegro_acodec.h>
 	<vector>
@@ -834,6 +834,10 @@
 	"Slider.h"
 	"algif5/src/algif.h"
 	"Bear.h"
+	"Block.h"
+	"Entry.h"
+	"Road.h"
+	"Treasure.h"
 
 1642394443 c:\users\fuchi\desktop\i2pfinalproject\allegro\include\allegro5\allegro_acodec.h
 	"allegro5/allegro.h"
@@ -926,13 +930,16 @@
 1642394443 source:c:\users\fuchi\desktop\i2pfinalproject\tower.cpp
 	"Tower.h"
 
-1642419876 source:c:\users\fuchi\desktop\i2pfinalproject\gamewindow.cpp
+1642433689 source:c:\users\fuchi\desktop\i2pfinalproject\gamewindow.cpp
 	"GameWindow.h"
 	"Bear.h"
 	"Block.h"
 	"Entry.h"
 	"Road.h"
 	"treasure.h"
+	"trap_0.h"
+	"trap_1.h"
+	"trap_2.h"
 	"global.h"
 	<iostream>
 
@@ -952,23 +959,32 @@
 1642394443 source:c:\users\fuchi\desktop\i2pfinalproject\algif5\src\lzw.c
 	"algif.h"
 
-1642420362 c:\users\fuchi\desktop\i2pfinalproject\bear.h
-	"Block.h"
+1642432655 c:\users\fuchi\desktop\i2pfinalproject\bear.h
 
-1642420049 c:\users\fuchi\desktop\i2pfinalproject\block.h
+1642434319 c:\users\fuchi\desktop\i2pfinalproject\block.h
 	<stdio.h>
 	<string.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_primitives.h>
 	<vector>
 	"global.h"
+	"Bear.h"
 
-1642419996 c:\users\fuchi\desktop\i2pfinalproject\treasure.h
+1642432749 c:\users\fuchi\desktop\i2pfinalproject\treasure.h
 	"Block.h"
 
-1642419916 c:\users\fuchi\desktop\i2pfinalproject\entry.h
+1642432893 c:\users\fuchi\desktop\i2pfinalproject\entry.h
 	"Block.h"
 
-1642419978 c:\users\fuchi\desktop\i2pfinalproject\road.h
+1642432770 c:\users\fuchi\desktop\i2pfinalproject\road.h
+	"Block.h"
+
+1642433735 c:\users\fuchi\desktop\i2pfinalproject\trap_0.h
+	"Block.h"
+
+1642433738 c:\users\fuchi\desktop\i2pfinalproject\trap_1.h
+	"Block.h"
+
+1642433754 c:\users\fuchi\desktop\i2pfinalproject\trap_2.h
 	"Block.h"
 

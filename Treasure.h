@@ -28,6 +28,13 @@ public:
 	~Treasure(){
 		al_destroy_bitmap(background);
 	};
+
+	int touch_response(Bear* player) { 
+		player->set_status(HAPPY);
+		discover();
+		return response; 
+	}
+	
 	
 	void Draw(){
     	if(covered)

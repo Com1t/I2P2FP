@@ -22,6 +22,10 @@
 // new added
 #include "algif5/src/algif.h"
 #include "Bear.h"
+#include "Block.h"
+#include "Entry.h"
+#include "Road.h"
+#include "Treasure.h"
 
 #define GAME_INIT -1
 #define GAME_SETTING 0

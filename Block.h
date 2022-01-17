@@ -7,6 +7,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <vector>
 #include "global.h"
+#include "Bear.h"
 
 class Block {
 public:
@@ -25,7 +26,13 @@ public:
     // functions that return informations of monster
     // return true: Kill character
     // return false: Not kill character
-    int touch_response() { return response; }
+    virtual int touch_response(Bear* player) { return response; }
+
+	bool touched(int x, int y) {
+		if(pos_x == x && pos_y == y)
+			return true;
+		return false;
+	};
 	
     int getWorth() { return worth; }
 
@@ -36,7 +43,7 @@ public:
     };
 
 protected:
-	int covered = 0;
+	int covered = 1;
 	ALLEGRO_BITMAP* fog = al_load_bitmap("./background/fog.jpg");
 	ALLEGRO_BITMAP* background;
 	// animation pointer

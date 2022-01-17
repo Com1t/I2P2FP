@@ -29,6 +29,12 @@ public:
 		al_destroy_bitmap(background);
 	};
 
+	int touch_response(Bear* player) { 
+		discover();
+		return response; 
+	}
+	
+
 	void Draw(){
     	if(covered)
     		al_draw_scaled_bitmap(fog, 0, 0, 1187, 671, 8+pos_y*130, 100+pos_x*74, 130, 74, 0);

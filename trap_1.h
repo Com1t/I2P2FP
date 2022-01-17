@@ -1,14 +1,14 @@
-#ifndef TRAP_0_H_INCLUDED
-#define TRAP_0_H_INCLUDED
+#ifndef TRAP_1_H_INCLUDED
+#define TRAP_1_H_INCLUDED
 
 #include "Block.h"
 
-class Trap_0 : public Block
+class Trap_1 : public Block
 {
 public:
-    Trap_0(int x, int y) : Block()
+    Trap_1(int x, int y) : Block()
     {
-		background = al_load_bitmap("./background/bgTrap01.jpg");
+		background = al_load_bitmap("./background/bgTrap02.jpg");
 		
 		response = true;
 		
@@ -16,7 +16,7 @@ public:
 		
 	    worth = 100;
 		
-		strncpy(class_name, "Trap_0", 20);
+		strncpy(class_name, "Trap_1", 20);
 		
 	    // position
 	    pos_x = x;
@@ -25,12 +25,12 @@ public:
 		Draw();
     }
 	
-	~Trap_0(){
+	~Trap_1(){
 		al_destroy_bitmap(background);
 	};
 
 	int touch_response(Bear* player) { 
-		printf("TRAP0\n");
+		printf("TRAP1\n");
 		player->set_status(SHAKE);
 		discover();
 		return response; 

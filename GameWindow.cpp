@@ -4,6 +4,9 @@
 #include "Entry.h"
 #include "Road.h"
 #include "treasure.h"
+#include "trap_0.h"
+#include "trap_1.h"
+#include "trap_2.h"
 #include "global.h"
 #include <iostream>
 
@@ -41,22 +44,39 @@ GameWindow::game_init()
     icon = al_load_bitmap("./icon.png");
     background = al_load_bitmap("./background/default0.jpg");
 	
-	
+	int deploy_amt = 5;
     road[1][0] = new Entry(1, 0);
-    for(int i = 0;i < Num_Road_Row;i++)
-        for(int j = 0;j < Num_Road_Col;j++)
+    for(int i = 0;i < Num_Road_Row;i++){
+		int deploy_col = rand() % (Num_Road_Col - 2) + 1;
+		for(int j = 0;j < Num_Road_Col;j++)
         {
             if(j == 0 || j == Num_Road_Col - 1)
             {
                 
                 road[i][j] = new Entry(i, j);
             }
+			else if(j == deploy_col && deploy_amt == 0){
+				road[i][j] = new Treasure(i, j);
+				deploy_amt--;
+			}
+			else if(j == deploy_col && deploy_amt == 1){
+				road[i][j] = new Trap_0(i, j);
+				deploy_amt--;
+			}
+			else if(j == deploy_col && deploy_amt == 2){
+				road[i][j] = new Trap_1(i, j);
+				deploy_amt--;
+			}
+			else if(j == deploy_col && deploy_amt >= 3){
+				road[i][j] = new Trap_2(i, j);
+				deploy_amt--;
+			}
             else
             {
                 road[i][j] = new Road(i, j);
             }
         }
-
+    }
 
     for(int i = 0; i < Num_TowerType; i++)
     {
@@ -423,11 +443,6 @@ GameWindow::process_event()
         if(event.timer.source == timer) {
             redraw = true;
 
-            /*if(Coin_Inc_Count == 0)
-                menu->Change_Coin(Coin_Time_Gain);
-
-            Coin_Inc_Count = (Coin_Inc_Count + 1) % CoinSpeed;*/
-
             if(monsterSet.size() == 0 && !al_get_timer_started(monster_pro))
             {
                 al_stop_timer(timer);
@@ -435,15 +450,6 @@ GameWindow::process_event()
             }
 
         }
-        /*else {
-            if(Monster_Pro_Count == 0) {
-               Monster *m = create_monster();
-
-                if(m != NULL);
-                    monsterSet.push_back(m);
-            }
-            Monster_Pro_Count = (Monster_Pro_Count + 1) % level->getMonsterSpeed();
-        }*/
     }
     else if(event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
         return GAME_EXIT;
@@ -453,11 +459,8 @@ GameWindow::process_event()
         switch(event.keyboard.keycode) {
             case ALLEGRO_KEY_P:
                 /*TODO: handle pause event here*/
-				printf("NONONO");
                 if(al_get_timer_started(timer)) al_stop_timer(timer), pause = 1;
                 else    al_start_timer(timer), pause = 0;
-                /*if(al_get_timer_started(monster_pro)) al_stop_timer(monster_pro);
-                else    al_start_timer(monster_pro);*/
                 break;
             case ALLEGRO_KEY_M:
                 mute = !mute;
@@ -485,54 +488,14 @@ GameWindow::process_event()
 				player->Move(DOWN);
                 break;
         }
-    }/*
-    else if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN && pause == 0) {
-        if(event.mouse.button == 1) {
-            if(selectedTower != -1 && mouse_hover(0, 0, field_width, field_height)) {
-                Tower *t = create_tower(selectedTower);
-
-                if(t == NULL)
-                    printf("Wrong place\n");
-                else {
-                    towerSet.push_back(t);
-                    towerSet.sort(compare);
-                }
-            } else if(selectedTower == -1){
-                std::list<Tower*>::iterator it = towerSet.begin();
-                if(lastClicked != -1)
-                {
-                    std::advance(it, lastClicked);
-                    (*it)->ToggleClicked();
-                }
-                for(i=0, it = towerSet.begin(); it != towerSet.end(); it++, i++)
-                {
-                    Circle *circle = (*it)->getCircle();
-                    int t_width = (*it)->getWidth();
-
-                    if(mouse_hover(circle->x - t_width/2, circle->y, t_width, t_width/2))
-                    {
-                        (*it)->ToggleClicked();
-                        lastClicked = i;
-                        break;
-                    } else {
-                        lastClicked = -1;
-                    }
-                }
-
-            }
-            // check if user wants to create some kind of tower
-            // if so, show tower image attached to cursor
-            selectedTower = menu->MouseIn(mouse_x, mouse_y);
-
-        }
+		for(int i = 0; i < Num_Road_Row; i++){
+			for(int j = 0; j < Num_Road_Col; j++){
+				if(road[i][j]->touched(player->getPos_y(), player->getPos_x())){
+					road[i][j]->touch_response(player);
+				}
+			}
+		}
     }
-    else if(event.type == ALLEGRO_EVENT_MOUSE_AXES && pause == 0){
-        mouse_x = event.mouse.x;
-        mouse_y = event.mouse.y;
-
-        menu->MouseIn(mouse_x, mouse_y);
-
-    }*/
 
     if(redraw) {
         // update each object in game
@@ -559,24 +522,6 @@ GameWindow::draw_running_map()
     for(int i = 0;i < Num_Road_Row;i++)
         for(int j = 0;j < Num_Road_Col;j++)
             road[i][j]->Draw();
-
-		
-    for(i = 0; i < field_height/40; i++)
-    {
-        for(j = 0; j < field_width/40; j++)
-        {
-            char buffer[50];
-            sprintf(buffer, "%d", i*15 + j);
-            if(level->isRoad(i*15 + j)) {
-                // al_draw_filled_rectangle(j*40, i*40, j*40+40, i*40+40, al_map_rgb(255, 244, 173));
-            }
-            //al_draw_text(font, al_map_rgb(0, 0, 0), j*40, i*40, ALLEGRO_ALIGN_CENTER, buffer);
-        }
-    }
-    for(i=0; i<monsterSet.size(); i++)
-    {
-        monsterSet[i]->Draw();
-    }
 	
 	player->Draw();
 
