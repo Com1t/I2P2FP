@@ -1,7 +1,10 @@
 #ifndef TRANSPORT_H_INCLUDED
 #define TRANSPORT_H_INCLUDED
-
+#include <iostream>
 #include "Block.h"
+
+using namespace std;
+
 
 class Transport : public Block
 {
@@ -9,12 +12,12 @@ public:
     Transport(int x, int y, int dest_x, int dest_y, int in_out) : Block()
     {
     	this->in_out = in_out; // in = 0, out = 1
-    	if(in_out)
+    	if(!in_out)
 			background = al_load_bitmap("./background/bgTransmitIn.jpg");
 		else
 			background = al_load_bitmap("./background/bgTransmitOut.jpg");
 		
-		response = false;
+		response = 0;
 		
 		damage = 0;
 		
@@ -40,6 +43,7 @@ public:
 		if(in_out == 0){
 			player->setPos_x(dest_x);
 			player->setPos_y(dest_y);
+			cout << player->getPos_x() << " " << player->getPos_y() << "\n";
 		}
 		discover();
 		return response; 
